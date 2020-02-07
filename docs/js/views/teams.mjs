@@ -9,7 +9,7 @@ const renderTemplate = () => {
     const template = `
     <div>
         <h1>${data.title}</h1>
-        <a href="./#/teams/64">64</a>
+        <a href="#/teams/64">64</a>
     </div>`
     
     renderPage(template, data.meta)

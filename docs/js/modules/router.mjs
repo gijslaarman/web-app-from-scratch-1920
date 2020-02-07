@@ -47,13 +47,12 @@ export default class Router {
                 }
             })
 
-            if (!hashFound) {
+            if (!hashFound && urlHash !== '#') {
                 // Render 404 page
-                console.error('Page not found')
                 errorpage()
             }
         } else {
-            // Render the homepage
+            // Render the homepage if there is no hash at all.
             homepage()
         }
     }
