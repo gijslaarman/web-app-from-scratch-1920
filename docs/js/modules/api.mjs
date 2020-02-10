@@ -9,7 +9,8 @@ export default class Api {
     constructor() {
         this.url = 'https://api.football-data.org/v2'
         this.headers = {
-            "X-Auth-Token": "0390172f7e894d5787121b3ee3c29540"
+            "X-Auth-Token": "0390172f7e894d5787121b3ee3c29540",
+            "mode": 'no-cors'
         }
         this.endpoint
     }
@@ -19,7 +20,8 @@ export default class Api {
             endpoint = ''
         }
 
-        console.log(`${this.url}${endpoint}`, this.headers)
+        const xhr = new XMLHttpRequest
+        console.log(`${this.url}${endpoint}?plan=TIER_ONE`, this.headers)
 
         fetch(`${this.url}${endpoint}`, this.headers).then(res => res.json()).then(result => console.log(result))
     }
