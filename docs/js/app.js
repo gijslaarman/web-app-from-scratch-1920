@@ -1,10 +1,3 @@
-const api = {
-    url: 'https://api.football-data.org/v2',
-    params: {
-        headers: {"X-Auth-Token": "0390172f7e894d5787121b3ee3c29540"}
-    }
-}
-
 import Router from './modules/router.mjs'
 
 // Views
@@ -31,6 +24,8 @@ window.addEventListener('hashchange', () => {
     router.view()
 })
 router.view()
+
+// fetch('https://api.football-data.org/v2/competitions/2021', {"X-Auth-Token": "0390172f7e894d5787121b3ee3c29540"}).then(res => res.json()).then(res => console.log(res))
 
 // fetch(`${api.url}/competitions/2021`, api.params)
 // .then(res => res.json())
