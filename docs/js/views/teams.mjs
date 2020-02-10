@@ -1,4 +1,4 @@
-import renderPage from "../modules/renderpage.mjs";
+import render from "../modules/render.mjs";
 
 const renderTemplate = () => {
     const data = {
@@ -12,7 +12,7 @@ const renderTemplate = () => {
         <a href="#/teams/64">64</a>
     </div>`
     
-    renderPage(template, data.meta)
+    render(template, data.meta)
 }
 
 export default renderTemplate

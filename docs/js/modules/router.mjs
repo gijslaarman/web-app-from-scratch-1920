@@ -1,5 +1,4 @@
 import errorpage from '../views/partials/errorpage.mjs'
-import homepage from '../views/home.mjs'
 
 export default class Router {
     constructor() {
@@ -8,7 +7,7 @@ export default class Router {
 
     init(hash, callback) {
         // Error handling for creating new routes
-        if (!hash) throw new Error('No hash given')
+        if (!hash && hash != '') throw new Error('No hash given')
         if (typeof hash !== "string") throw new TypeError('Hash has to be a string')
         if (!callback) throw new Error('No callback defined')
         if (typeof callback !== "function") throw new TypeError('Callback has to be a function')
@@ -20,7 +19,7 @@ export default class Router {
 
         // All checks ok
         const route = {
-            hash: new RegExp("^#/" + hash.replace(/:[^\s/]+/g, '([\\w-]+)') + "$"), // replace the hash with a regex, that also transforms all :id params ":" with a RegEx that accepts all words, this RegEx is found on StackOverflow.
+            hash: new RegExp(`^${hash === "" ? '' : '#/'}` + hash.replace(/:[^\s/]+/g, '([\\w-]+)') + "$"), // replace the hash with a regex, that also transforms all :id params ":" with a RegEx that accepts all words, this RegEx is found on StackOverflow.
             callback // callback: callback
         }
 
@@ -29,31 +28,33 @@ export default class Router {
  
     view() {
         let urlHash = window.location.hash
+        let hashFound = false
+        // console.log(urlHash.slice(1))
 
         if (urlHash.slice(-1) === '/') {
-            // If user puts an extra forward slash behind the url it will not be accounted for in the check.
+            // If user does not add a forward slash behind their url, add it.
             urlHash = urlHash.slice(0, -1)
         }
 
-        if (urlHash) {
-            let hashFound
+        if (urlHash.charAt(1) !== '/') { urlHash = urlHash.slice(0,1) + '/' + urlHash.slice(1) } // Add '/' between # & route #teams > #/teams
 
-            this.routes.some(route => {
-                // If route.hash matches window.location.hash
-                if (urlHash.match(route.hash)) {
-                    hashFound = true
-                    let req = {}
-                    return route.callback.call(this, req)
-                }
-            })
+        if (urlHash === '#') {
+            // If hash is only # because we removed the '/' then set it empty so it can render Home.
+            urlHash = ''
+        }
 
-            if (!hashFound && urlHash !== '#') {
-                // Render 404 page
-                errorpage()
+        this.routes.some(route => {
+            // If route.hash matches window.location.hash
+            if (urlHash.match(route.hash)) {
+                hashFound = true
+                let req = {}
+                return route.callback.call(this, req)
             }
-        } else {
-            // Render the homepage if there is no hash at all.
-            homepage()
+        })
+
+        if (!hashFound && urlHash !== '/') {
+            // Render 404 page
+            errorpage()
         }
     }
 }

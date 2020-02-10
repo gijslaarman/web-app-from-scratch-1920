@@ -1,4 +1,4 @@
-import renderPage from "../modules/renderpage.mjs";
+import render from "../modules/render.mjs";
 
 const renderTemplate = () => {
     const data = {
@@ -11,7 +11,7 @@ const renderTemplate = () => {
         <h1>${data.title}</h1>
     </div>`
     
-    renderPage(template, data.meta)
+    render(template, data.meta)
 }
 
 export default renderTemplate

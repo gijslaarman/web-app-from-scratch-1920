@@ -1,5 +1,8 @@
-import renderPage from "../modules/renderpage.mjs"
+import render from "../modules/render.mjs"
 import Api from "../modules/api.mjs"
+
+// Import components
+import matchday from './components/matchday.mjs'
 
 const renderTemplate = () => {
     const data = {
@@ -9,14 +12,17 @@ const renderTemplate = () => {
 
     const api = new Api
 
-    api.get('/competitions/2021')
-    
+    // api.getStandings().then(res => console.log(res))
+    // api.getCurrentMatchday().then(res => console.log(res))
+    // api.getMatchday(0).then(res => console.log(res))
+
     const template = `
     <div>
         <h1>${data.title}</h1>
+        ${matchday()}
     </div>`
     
-    renderPage(template, data.meta)
+    render(template, data.meta)
 }
 
 export default renderTemplate
