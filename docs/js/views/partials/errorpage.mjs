@@ -1,18 +1,21 @@
 import render from "../../modules/render.mjs";
 
-const renderTemplate = () => {
+const renderTemplate = (errorStatusCode) => {
     const data = {
+        component: "error",
         title: "404 Page not found",
-        meta: {error: 'error'}
+        error: {
+            statusCode: errorStatusCode
+        }
     }
-    
+
     const template = `
     <div>
         <h1>${data.title}</h1>
         <a href="#">Back to home</a>
     </div>`
-    
-    render(template, data.meta)
+
+    render(template, data)
 }
 
 export default renderTemplate

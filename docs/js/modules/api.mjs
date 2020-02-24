@@ -8,12 +8,11 @@ export default class Api {
     }
 
     makeReq(endpoint) {
-        console.log(`${this.url}${endpoint}`, this.urlParams)
         return fetch(`${this.url}${endpoint}`, this.urlParams).then(res => res.json())
     }
 
     getStandings() {
-        return this.makeReq('/competitions/2021/standings')
+        return this.makeReq(`/competitions/${this.premierLeagueId}/standings`)
     }
 
     getMatchday(number) {
@@ -28,11 +27,13 @@ export default class Api {
         return this.makeReq(`/competitions/${this.premierLeagueId}/matches`)
         .then(res => {
             let currentMatchday = res.matches[0].season.currentMatchday
-
-            let matchdayMatches = res.matches.filter(match => match.matchday === currentMatchday)
-
-            console.log(matchdayMatches)
+            let matchdayMatches = res.matches.filter(match => match.matchday === (currentMatchday + number))
+            return matchdayMatches
         })
+    }
+
+    getMatch(id) {
+        return this.makeReq(`/matches/${id}`)
     }
 
     getTeam(id) {

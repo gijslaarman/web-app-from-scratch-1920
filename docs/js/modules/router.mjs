@@ -1,5 +1,3 @@
-import errorpage from '../views/partials/errorpage.mjs'
-
 export default class Router {
     constructor() {
         this.routes = []
@@ -19,29 +17,30 @@ export default class Router {
 
         // All checks ok
         const route = {
-            hash: new RegExp(`^${hash === "" ? '' : '#/'}` + hash.replace(/:[^\s/]+/g, '([\\w-]+)') + "$"), // replace the hash with a regex, that also transforms all :id params ":" with a RegEx that accepts all words, this RegEx is found on StackOverflow.
+            hash: new RegExp(`^${hash === "" ? '' : '#/'}` + hash.replace(/:[^\s/]+/g, '([\\w-]+)') + "$"), // replace the hash with a regex, that also transforms all :id params ":" with a RegEx that accepts all words, this RegEx is found on StackOverflow. And if the Hash is exactly '' do not change it so that you can set a home router.
             callback // callback: callback
         }
 
         this.routes.push(route)
     }
+
+    setErrorPage(template) {
+        this.errorPage = template
+    }
  
     view() {
         let urlHash = window.location.hash
         let hashFound = false
-        // console.log(urlHash.slice(1))
 
-        if (urlHash.slice(-1) === '/') {
-            // If user does not add a forward slash behind their url, add it.
-            urlHash = urlHash.slice(0, -1)
+        if (urlHash.slice(-1) === '/') { urlHash = urlHash.slice(0, -1) } // If user does adds a forward slash behind their url, remove it.
+
+        // Add '/' between # & route #teams > #/teams & replace the window.location from /#example to /#/example
+        if (urlHash.charAt(1) !== '/' && urlHash !== '' && urlHash !== '#') { 
+            urlHash = urlHash.slice(0, 1) + '/' + urlHash.slice(1)
+            window.history.replaceState("","",urlHash)
         }
 
-        if (urlHash.charAt(1) !== '/') { urlHash = urlHash.slice(0,1) + '/' + urlHash.slice(1) } // Add '/' between # & route #teams > #/teams
-
-        if (urlHash === '#') {
-            // If hash is only # because we removed the '/' then set it empty so it can render Home.
-            urlHash = ''
-        }
+        if (urlHash === '#') { urlHash = '' } // If hash is only # because we removed the '/' then set it empty so it can render Home.
 
         this.routes.some(route => {
             // If route.hash matches window.location.hash
@@ -52,9 +51,8 @@ export default class Router {
             }
         })
 
-        if (!hashFound && urlHash !== '/') {
-            // Render 404 page
-            errorpage()
+        if (!hashFound) {
+            return this.errorPage.call(this)
         }
     }
 }

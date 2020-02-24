@@ -1,17 +1,25 @@
 import Router from './modules/router.mjs'
+import Header from './views/partials/header.mjs' // Import header script to set navigation anchors as active.
 
 // Views
-import Teams from './views/teams.mjs'
+import Match from './views/match.mjs'
+import Matches from './views/matches.mjs'
 import TeamDetails from './views/teamDetail.mjs'
-import Home from './views/home.mjs'
+import Standings from './views/standings.mjs'
+import Stats from './views/stats.mjs'
+
+// Errorpage
+import Errorpage from './views/partials/errorpage.mjs'
 
 // Hash router set-up
 const router = new Router()
 const routes = [
     // {hash: Function}, the # in the routes are automatically placed before.
-    {'': Home},
-    {'teams': Teams},
-    {'teams/:id': TeamDetails}
+    {'': Matches},
+    {'standings': Standings},
+    {'statistics': Stats},
+    {'teams/:id': TeamDetails},
+    {'match/:id': Match}
 ]
 
 routes.forEach(route => {
@@ -19,8 +27,7 @@ routes.forEach(route => {
     // Initialize the routes in the router, {hash: function}
     router.init(routingHash, route[routingHash])
 })
-
-console.log(router)
+router.setErrorPage(Errorpage)
 
 // Detect hash changes and render the view based of that.
 window.addEventListener('hashchange', () => {
