@@ -11,6 +11,10 @@ export default class Api {
         return fetch(`${this.url}${endpoint}`, this.urlParams).then(res => res.json())
     }
 
+    getCompetition() {
+        return this.makeReq(`/competitions/${this.premierLeagueId}`)
+    }
+
     getStandings() {
         return this.makeReq(`/competitions/${this.premierLeagueId}/standings`)
     }
@@ -38,6 +42,10 @@ export default class Api {
 
     getTeam(id) {
         return this.makeReq(`/teams/${id}`)
+    }
+
+    getTeams() {
+        return this.makeReq(`/competitions/${this.premierLeagueId}/teams`)
     }
 
     getTopScorers() {

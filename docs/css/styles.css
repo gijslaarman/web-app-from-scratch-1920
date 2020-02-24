@@ -10,6 +10,7 @@ html {
     --main-color: #37003c;
     --white: #ffffff;
     --pink: #ff2882;
+    --green: #00ff85;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -89,6 +90,7 @@ main {
     color: #212121;
     margin: 0.5em 0;
     font-size: 0.875em;
+    transition: all 200ms;
 }
 
 .match-block:first-of-type {
@@ -96,6 +98,10 @@ main {
 }
 .match-block:last-of-type {
     margin-bottom: 0;
+}
+
+.match-block:hover {
+    transform: scale(1.015);
 }
 
 .match-block .teams {
@@ -106,10 +112,24 @@ main {
     display: flex;
     justify-content: space-between;
     padding: 0.5em 0;
+    align-items: center;
 }
 .match-block .teams .team.lost {
-    opacity: 0.5;
+    color: grey;
 }
+
+.match-block .teams .team span:first-of-type {
+    display: flex;
+    align-items: center;
+}
+
+.match-block .teams .team img {
+    width: 1.5em;
+    height: 1.5em;
+    object-fit: contain;
+    margin-right: 0.5em;
+}
+
 
 .match-block .meta {
     flex: 1 1 25%;

@@ -1,5 +1,6 @@
 import Router from './modules/router.mjs'
-import Header from './views/partials/header.mjs' // Import header script to set navigation anchors as active.
+import header from './views/partials/header.mjs' // Import header script to set navigation anchors as active.
+import cache from './modules/cache.mjs'
 
 // Views
 import Match from './views/match.mjs'
@@ -34,3 +35,6 @@ window.addEventListener('hashchange', () => {
     router.view()
 })
 router.view()
+
+// Call cache function
+cache()

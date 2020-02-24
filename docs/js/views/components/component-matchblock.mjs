@@ -17,20 +17,24 @@ const getMeta = (matchData) => {
 }
 
 const component = (matchData) => {
-    console.log(matchData)
+    // console.log(matchData)
+    const homeTeam = JSON.parse(localStorage.getItem(matchData.homeTeam.id))
+    const awayTeam = JSON.parse(localStorage.getItem(matchData.awayTeam.id))
 
     const template = `
         <a class="match-block" href="#/match/${matchData.id}">
             <div class="teams">
                 <div class="team ${matchData.score.winner === "AWAY_TEAM" ? 'lost' : ''}">
                     <span>
-                    ${matchData.homeTeam.name}
+                        <img src="${homeTeam.crestUrl}"/>
+                        ${homeTeam.shortName}
                     </span>
                     ${matchData.status !== "SCHEDULED" && matchData.status !== "POSTPONED" ? `<span>${matchData.score.fullTime.homeTeam}</span>` : ''}
                 </div>
                 <div class="team ${matchData.score.winner === "HOME_TEAM" ? 'lost' : ''}">
                     <span>
-                    ${matchData.awayTeam.name}
+                    <img src="${awayTeam.crestUrl}"/>
+                    ${awayTeam.shortName}
                     </span>
                     ${matchData.status !== "SCHEDULED" && matchData.status !== "POSTPONED" ? `<span>${matchData.score.fullTime.awayTeam}</span>` : ''}
                 </div>
