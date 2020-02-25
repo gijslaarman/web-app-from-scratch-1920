@@ -6,16 +6,18 @@
 html {
     background-color: whitesmoke;
 }
+
 :root {
     --main-color: #37003c;
     --white: #ffffff;
     --pink: #ff2882;
     --green: #00ff85;
+    --dark: #212121;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 header {
-    background-color: var(--main-color);
+    background: var(--main-color);
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -24,6 +26,25 @@ header {
     left: 0;
     width: 100%;
     z-index: 1;
+    transition: background-color 500ms;
+}
+
+.hide {
+    display: none;
+}
+
+header .back-button {
+    display: none;
+}
+header.match a {
+    display: none;
+}
+header.match .back-button {
+    display: block;
+}
+
+header.match {
+    background-color: #2D0530;
 }
 
 header .logo {
@@ -151,4 +172,143 @@ main {
 
 .match-block .meta .date.FT {
     color: #00000054;
+}
+
+#match {
+    padding: 0;
+}
+
+#match .top {
+    background-color: var(--white);
+    padding: 0.5em 0.5em;
+    color: var(--main-color);
+    box-shadow: 0 4px 4px 0 #00000005;
+}
+
+.top .wrapper {
+    display: flex;
+    justify-content: space-between;
+    max-width: 20em;
+    margin: 0 auto;
+    padding: 0 1em;
+}
+
+.top .status {
+    font-weight: bold;
+}
+
+.top .date {
+    color: var(--dark);
+    opacity: 0.8;
+}
+
+#match .details .teams {
+    display: flex;
+    align-items: center;
+    padding: 2em 1em;
+    max-width: 20em;
+    margin: 0 auto;
+}
+
+.details.FINISHED .score, .details.IN_PLAY .score {
+    color: var(--main-color);
+    font-size: 2em;
+}
+
+.details .score {
+    flex: 0 0 3.5em;
+    text-align: center;
+}
+
+.team {
+    flex: 1 1 100%;
+}
+.team:last-of-type {
+    text-align: right;
+}
+
+.team h3 {
+    font-size: 0.825em;
+    margin-top: 0.5em;
+}
+.team img {
+    width: 3em;
+    height: 3em;
+    object-fit: contain;
+}
+
+#match .venue {
+    color: #AAA;
+    font-size: 0.75em;
+    text-align: center;
+}
+#match .venue span {
+    color: #212121;
+    font-weight: bold;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: none;
+}
+
+tr:hover {
+    background-color: var(--main-color);
+    color: white;
+    cursor: pointer;
+}
+
+tr:first-of-type:hover {
+    background-color: unset;
+    color: var(--main-color);
+    cursor: unset;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+th, td {
+    padding: 1em 0;
+}
+th {
+    font-weight: bold;
+    border-bottom: 1px solid lightgrey;
+    color: var(--main-color);
+}
+
+td {
+    text-align: center;
+}
+
+#standings table {
+    width: 100%;
+}
+
+    #standings .crest {
+        width: 1em;
+        height: 1em;
+        margin-right: 0.5em;
+        object-fit: contain;
+        vertical-align: text-top;
+    }
+
+    #standings .position {
+        width: 1.5em;
+        text-align: center;
+        font-size: 0.875em;
+        display: inline-block;
+    }
+
+    .club {
+        text-align: left;
+    }
+
+@media (max-width: 32em) {
+    #standings .no-mobile {
+        display: none;
+    }
 }

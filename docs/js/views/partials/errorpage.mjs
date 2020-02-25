@@ -2,7 +2,7 @@ import render from "../../modules/render.mjs";
 
 const renderTemplate = (errorStatusCode) => {
     const data = {
-        component: "error",
+        id: "error",
         title: "404 Page not found",
         error: {
             statusCode: errorStatusCode
@@ -15,7 +15,7 @@ const renderTemplate = (errorStatusCode) => {
         <a href="#">Back to home</a>
     </div>`
 
-    render(template, data)
+    render.template(template, data)
 }
 
 export default renderTemplate

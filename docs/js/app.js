@@ -5,9 +5,8 @@ import cache from './modules/cache.mjs'
 // Views
 import Match from './views/match.mjs'
 import Matches from './views/matches.mjs'
-import TeamDetails from './views/teamDetail.mjs'
+// import TeamDetails from './views/teamDetail.mjs'
 import Standings from './views/standings.mjs'
-import Stats from './views/stats.mjs'
 
 // Errorpage
 import Errorpage from './views/partials/errorpage.mjs'
@@ -18,9 +17,9 @@ const routes = [
     // {hash: Function}, the # in the routes are automatically placed before.
     {'': Matches},
     {'standings': Standings},
-    {'statistics': Stats},
-    {'teams/:id': TeamDetails},
     {'match/:id': Match}
+    // {'statistics': Stats},
+    // {'teams/:id': TeamDetails},
 ]
 
 routes.forEach(route => {

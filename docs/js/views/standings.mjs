@@ -1,61 +1,56 @@
 import render from "../modules/render.mjs"
-import Api from "../modules/api.mjs"
-const api = new Api
+import apiCall from "../modules/api.mjs"
 
-const getStandings = () => {
-    let promise = new Promise((resolve, reject) => {
-        resolve(api.getStandings().then(res => res.standings))
-    })
+const getHtml = () => {
+    return apiCall.getStandings()
+        .then(standings => {
+            const totalTable = standings.standings.find(table => table.type === 'TOTAL')
 
-    promise.then(array => {
-        const table = array.find(table => table.type === 'TOTAL')
+            const template = `<table>
+                    <tr>
+                        <th class="club">Club</th>
+                        <th>MP</th>
+                        <th class="no-mobile">W</th>
+                        <th class="no-mobile">D</th>
+                        <th class="no-mobile">L</th>
+                        <th class="no-mobile">GF</th>
+                        <th class="no-mobile">GA</th>
+                        <th>+/-</th>
+                        <th>Pts</th>
+                    </tr>
+                    ${createRows(totalTable)}  
+                </table>`
 
-        const tableDataArray = table.table.map(row => {
-            return `
-            <tr onclick="window.location='#/teams/${row.team.id}'">
-                <td>${row.position} ${row.team.name}</td>
-                <td>${row.playedGames}</td>
-                <td>${row.won}</td>
-                <td>${row.draw}</td>
-                <td>${row.lost}</td>
-                <td>${row.goalsFor}</td>
-                <td>${row.goalsAgainst}</td>
-                <td>${row.goalDifference}</td>
-                <td>${row.points}</td>
-            </tr>`
+            return template
+
+            function createRows(table) {
+                return table.table.map(row => {
+                    const team = JSON.parse(localStorage.getItem(row.team.id))
+
+                    return `
+                    <tr onclick="window.location='#/teams/${row.team.id}'">
+                        <td class="club"><span class="position">${row.position}</span> <img class="crest" src="${team.crestUrl}" />${team.shortName}</td>
+                        <td>${row.playedGames}</td>
+                        <td class="no-mobile">${row.won}</td>
+                        <td class="no-mobile">${row.draw}</td>
+                        <td class="no-mobile">${row.lost}</td>
+                        <td class="no-mobile">${row.goalsFor}</td>
+                        <td class="no-mobile">${row.goalsAgainst}</td>
+                        <td>${row.goalDifference}</td>
+                        <td class="bold">${row.points}</td>
+                    </tr>`
+                }).join('')
+            }
         })
-
-        let element = document.getElementById('loading')
-        while (element.firstChild) element.removeChild(element.firstChild)
-        element.insertAdjacentHTML('afterbegin', `
-            <table>
-                <tr>
-                    <th>Club</th>
-                    <th>MP</th>
-                    <th>W</th>
-                    <th>D</th>
-                    <th>L</th>
-                    <th>GF</th>
-                    <th>GA</th>
-                    <th>GD</th>
-                    <th>Pts</th>
-                </tr>
-                ${tableDataArray.join('')}  
-            </table>
-        `)
-    })
 }
 
 const renderTemplate = () => {
     const data = {
-        component: "standings"
+        id: "standings"
     }
 
-    getStandings()
-
-    const template = `<section id="loading"><img src="./img/spinner.svg" /></section>`
-    
-    render(template, data)
+    render.loadingState()
+    getHtml().then(html => render.template(html, data))
 }
 
 export default renderTemplate

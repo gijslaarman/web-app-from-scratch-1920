@@ -1,15 +1,14 @@
-import Api from './api.mjs'
-const api = new Api
+import apiCall from './api.mjs'
 
-function saveTeams() {
-    api.getTeams().then(res => 
+const saveTeams = () => {
+    apiCall.getTeams().then(res => 
         res.teams.forEach(team => {
             window.localStorage.setItem(team.id, JSON.stringify(team))
         }))
 }
 
-function cache() {
-    api.getCompetition().then(competition => {
+const cache = () => {
+    apiCall.getCompetition().then(competition => {
         // Check if the current season is the same as the actual season of the Premier league.
         const fetchedSeasonId = competition.currentSeason.id.toString()
         const storedSeasonId = window.localStorage.getItem('currentSeasonId')

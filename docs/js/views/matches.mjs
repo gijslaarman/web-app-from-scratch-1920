@@ -1,37 +1,21 @@
 import render from "../modules/render.mjs"
-import Api from "../modules/api.mjs"
-const api = new Api
+import apiCall from "../modules/api.mjs"
 
 // Import components
 import matchBlock from "./components/component-matchblock.mjs"
 
-const getMatchdayData = (number) => {
-    let promise = new Promise((resolve, reject) => {
-        resolve(api.getMatchday(number).then(res => {
-            return res.map(match => {
-                return matchBlock(match)
-            })
-        }))
-    })
-
-    promise.then(array => {
-        let element = document.getElementById('matches')
-        while (element.firstChild) element.removeChild(element.firstChild)
-        element.insertAdjacentHTML('afterbegin', array.join(''))
-    })
-}
-
-const renderTemplate = () => {
-    const data = {
-        component: "matches",
-        meta: {}
+const template = {
+    getHtml: (number) => {
+        return apiCall.getMatchday(number).then(res => res.map(match => matchBlock(match)).join(''))
+    },
+    render: () => {
+        const data = {
+            id: "matches",
+            meta: {}
+        }
+        render.loadingState()
+        template.getHtml().then(html => render.template(html, data))
     }
-
-    getMatchdayData()
-
-    const template = `<section id="loading"><img src="./img/spinner.svg" /></section>`
-    
-    render(template, data)
 }
 
-export default renderTemplate
+export default template.render

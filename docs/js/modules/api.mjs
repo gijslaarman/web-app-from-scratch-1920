@@ -1,25 +1,27 @@
-export default class Api {
-    constructor() {
-        this.url = 'https://api.football-data.org/v2',
-        this.urlParams = {
-            headers: { "X-Auth-Token": "0390172f7e894d5787121b3ee3c29540"}
+const apiCall = {
+    settings: {
+        url: 'https://api.football-data.org/v2',
+        urlParams: {
+            headers: { "X-Auth-Token": "0390172f7e894d5787121b3ee3c29540" }
         },
-        this.premierLeagueId = '2021'
-    }
+        premierLeagueId: '2021'
+    },
 
-    makeReq(endpoint) {
-        return fetch(`${this.url}${endpoint}`, this.urlParams).then(res => res.json())
-    }
+    makeReq: async (endpoint) => {
+        const fetchCall = await fetch(`${apiCall.settings.url}${endpoint}`, apiCall.settings.urlParams)
+        const jsonFormat = await fetchCall.json()
+        return jsonFormat
+    },
 
-    getCompetition() {
-        return this.makeReq(`/competitions/${this.premierLeagueId}`)
-    }
+    getCompetition: () => {
+        return apiCall.makeReq(`/competitions/${apiCall.settings.premierLeagueId}`)
+    },
 
-    getStandings() {
-        return this.makeReq(`/competitions/${this.premierLeagueId}/standings`)
-    }
+    getStandings: () => {
+        return apiCall.makeReq(`/competitions/${apiCall.settings.premierLeagueId}/standings`)
+    },
 
-    getMatchday(number) {
+    getMatchday: (number) => {
         if (number) {
             // If number is given check if it's a number, Strings are not wanted.
             if (typeof number !== 'number') throw new Error('Matchday definer should be a number.')
@@ -28,35 +30,27 @@ export default class Api {
             number = 0
         }
 
-        return this.makeReq(`/competitions/${this.premierLeagueId}/matches`)
-        .then(res => {
-            let currentMatchday = res.matches[0].season.currentMatchday
-            let matchdayMatches = res.matches.filter(match => match.matchday === (currentMatchday + number))
-            return matchdayMatches
-        })
-    }
+        return apiCall.makeReq(`/competitions/${apiCall.settings.premierLeagueId}/matches`)
+            .then(res => {
+                let currentMatchday = res.matches[0].season.currentMatchday
+                let matchdayMatches = res.matches.filter(match => match.matchday === (currentMatchday + number))
+                return matchdayMatches
+            })
+    },
 
-    getMatch(id) {
-        return this.makeReq(`/matches/${id}`)
-    }
+    getMatch: (id) => {
+        if (!id) throw new Error('getMatch(): no id given')
+        return apiCall.makeReq(`/matches/${id}`)
+    },
 
-    getTeam(id) {
-        return this.makeReq(`/teams/${id}`)
-    }
+    getTeam: (id) => {
+        if (!id) throw new Error('getTeam(): no id given')
+        return apiCall.makeReq(`/teams/${id}`)
+    },
 
-    getTeams() {
-        return this.makeReq(`/competitions/${this.premierLeagueId}/teams`)
-    }
-
-    getTopScorers() {
-        return this.makeReq(`/competitions/${this.premierLeagueId}/scorers`)
-    }
-
-    getPlayer(id) {
-        return this.makeReq(`/players/${id}`)
-    }
-
-    getPlayerMatches(id) {
-        return this.makeReq(`/players/${id}/matches`)
+    getTeams: () => {
+        return apiCall.makeReq(`/competitions/${apiCall.settings.premierLeagueId}/teams`)
     }
 }
+
+export default apiCall
