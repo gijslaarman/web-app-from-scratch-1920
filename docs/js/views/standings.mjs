@@ -28,7 +28,7 @@ const getHtml = () => {
                     const team = JSON.parse(localStorage.getItem(row.team.id))
 
                     return `
-                    <tr onclick="window.location='#/teams/${row.team.id}'">
+                    <tr onclick="window.location='#/teams/${team.shortName}'">
                         <td class="club"><span class="position">${row.position}</span> <img class="crest" src="${team.crestUrl}" />${team.shortName}</td>
                         <td>${row.playedGames}</td>
                         <td class="no-mobile">${row.won}</td>
