@@ -10,10 +10,18 @@
 ## Table of contents
 
 - [Installation](#installation)
+    - [Authentication](#authentication)
     - [Dependencies](#dependencies)
 - [Interactions](#interactions)
 - [Data](#data)
+    - [Restrictions](#restrictions)
+    - [Caching](#caching)
+- [Architecture](#architecture)
+    - [Actor Diagram](#architecture)
+    - [Interaction Diagram](#architecture)
 - [Checklist](#checklist)
+- [Thoughts](#thoughts)
+- [License](#license)
 
 <!-- How about a section that describes how to install this project? 🤓 -->
 ## Installation
@@ -131,14 +139,32 @@ Made with [draw.io](https://draw.io).
 
 #### Interaction Diagram
 ![Interaction Diagram](assets/interactiondiagram.jpg)
-<!-- Maybe a checklist of done stuff and stuff still on your wishlist? ✅ -->
-## Checklist
-- [x] Own routing
-- [x] Making it modular
-- [ ] Actor Diagram
-- [ ] Interaction Diagram
-- [ ] create
 
-<!-- How about a license here? 📜 (or is it a licence?) 🤷 -->
+## Checklist
+- [x] Find Api
+- [x] Read documentation
+- [x] Render first template
+- [x] Write router
+- [x] Make architecture modular
+- [x] Make new template
+- [x] Write functions to render template
+- [ ] Ability to cycle through matchdays
+- [x] Loading state
+- [x] ~~Rewrite functions 100x times.~~
+- [x] Add styling
+- [x] Make match detailview
+- [ ] Add Head2Head on detailview
+- [ ] Have a detailpage per team.
+- [ ] Have team detailpage change color depending on team colors
+- [ ] Refactor (~50% done)
+- [ ] Have live data, and show that a match is live
+- [x] Write README
+- [x] Create Actor Diagram
+- [x] Create Interaction Diagram
+- [x] Write thoughts 💭in README
+
+## Thoughts
+I had a lot of fun making this project. Although missing almost an entire week because of a fever, I'm still semi happy with the result. I would have liked more information on the match detailpage, but in the end I spend a lot of time refactoring, thinking there's a better more readable solution to my functions.
+
 ## License
 Web-app-from-scratch-1920: Premier League is licensed under a [MIT License](https://www.github.com/gijslaarman/web-app-from-scratch-1920/blob/master/LICENSE)
